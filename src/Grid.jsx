@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef } from "react";
 
-const numRows = 25;
-const numCols = 40;
+
+
+// numRows and numCols should be managed inside the hook, not at the top level
 
 const neighborOffsets = [
   [0, 1], [0, -1], [1, -1],
@@ -9,21 +10,28 @@ const neighborOffsets = [
   [-1, -1], [1, 0], [-1, 0]
 ];
 
-const generateEmptyGrid = () =>
-  Array.from({ length: numRows }, () =>
+
+function generateEmptyGrid(numRows, numCols) {
+  return Array.from({ length: numRows }, () =>
     Array.from({ length: numCols }, () => 0)
   );
+}
 
-const generateRandomGrid = () =>
-  Array.from({ length: numRows }, () =>
+function generateRandomGrid(numRows, numCols) {
+  return Array.from({ length: numRows }, () =>
     Array.from({ length: numCols }, () =>
       Math.random() > 0.7 ? 1 : 0
     )
   );
+}
 
-export function useGrid() {
-  const [grid, setGrid] = useState(() => generateEmptyGrid());
+
+export function useGrid(initialRows = 20, initialCols = 20) {
+  const [numRows, setRows] = useState(initialRows);
+  const [numCols, setCols] = useState(initialCols);
+  const [grid, setGrid] = useState(() => generateEmptyGrid(initialRows, initialCols));
   const runningRef = useRef(false);
+
 
   const toggleCell = useCallback((i, j) => {
     setGrid(grid => {
@@ -33,13 +41,16 @@ export function useGrid() {
     });
   }, []);
 
+
   const clearGrid = useCallback(() => {
-    setGrid(generateEmptyGrid());
-  }, []);
+    setGrid(generateEmptyGrid(numRows, numCols));
+  }, [numRows, numCols]);
+
 
   const randomizeGrid = useCallback(() => {
-    setGrid(generateRandomGrid());
-  }, []);
+    setGrid(generateRandomGrid(numRows, numCols));
+  }, [numRows, numCols]);
+
 
   const runSimulationStep = useCallback(() => {
     setGrid(grid => {
@@ -61,7 +72,20 @@ export function useGrid() {
         })
       );
     });
-  }, []);
+  }, [numRows, numCols]);
+
+
+  // When numRows or numCols changes, regenerate the grid
+  const updateRows = (e) => {
+    const value = parseInt(e.target.value, 10);
+    setRows(value);
+    setGrid(generateEmptyGrid(value, numCols));
+  };
+  const updateCols = (e) => {
+    const value = parseInt(e.target.value, 10);
+    setCols(value);
+    setGrid(generateEmptyGrid(numRows, value));
+  };
 
   return {
     grid,
@@ -71,5 +95,9 @@ export function useGrid() {
     randomizeGrid,
     runSimulationStep,
     runningRef,
+    setRows: updateRows,
+    setCols: updateCols,
+    numRows,
+    numCols
   };
 }

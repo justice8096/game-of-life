@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+.runButtons {
+  background: pink;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.sizeInput {
+  width: 60px;
+  padding: 4px 8px;
+  margin: 0 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  color: black;
+  transition: border 0.2s;
+}
+.sizeInput:focus {
+  border: 1.5px solid #0078d7;
+  outline: none;
+  background: #fff;
+  color: navy;
+}

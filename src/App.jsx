@@ -1,4 +1,7 @@
+
+import "./App.css";
 import React, { useState, useEffect } from "react";
+
 import { useGrid } from "./Grid";
 
 export default function GameOfLife() {
@@ -9,7 +12,21 @@ export default function GameOfLife() {
     randomizeGrid,
     runSimulationStep,
     runningRef,
+    setRows,
+    setCols,
+    numRows,
+    numCols
   } = useGrid();
+
+  function handleSetCols(e) {
+    setRunning(false);
+    setCols(e); // setCols expects the event, not just the value
+  }
+
+    function handleSetRows(e) {
+    setRunning(false);
+    setRows(e); // setCols expects the event, not just the value
+  }
 
   const [running, setRunning] = useState(false);
 
@@ -46,11 +63,18 @@ export default function GameOfLife() {
         )}
       </div>
       <div style={{ marginTop: 10 }}>
-        <button onClick={() => setRunning(!running)}>
+        <button onClick={() => setRunning(!running)} className="runButtons">
           {running ? "Stop" : "Start"}
         </button>
-        <button onClick={randomizeGrid}>Random</button>
-        <button onClick={clearGrid}>Clear</button>
+        <button onClick={randomizeGrid} className="runButtons">Random</button>
+        <button onClick={clearGrid} className="runButtons">Clear</button>
+        <div>
+          <b>Grid Size</b> <br />
+          <label>Width:</label>
+          <input value={numCols} onChange={handleSetCols} type="number" min="1" max="100" className='sizeInput'/>
+          <label>Height:</label>
+          <input value={numRows} onChange={handleSetRows} type="number" min="1" max="100" className='sizeInput'/>
+        </div>
       </div>
     </div>
   );
