@@ -18,6 +18,8 @@ export default function GameOfLife() {
     numCols
   } = useGrid();
 
+  const [cellSize, setCellSize] = useState(20);
+
   function handleSetCols(e) {
     setRunning(false);
     setCols(e); // setCols expects the event, not just the value
@@ -29,6 +31,12 @@ export default function GameOfLife() {
   }
 
   const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    // This runs every time numRows or numCols change
+    let cellMax=Math.max(numCols, numRows); // Reset cell size when changing rows or columns
+    setCellSize(Math.round(20*(20/cellMax))); // Reset cell size when
+  }, [numRows, numCols]);
 
   useEffect(() => {
     runningRef.current = running;
@@ -46,15 +54,15 @@ export default function GameOfLife() {
   return (
     <div style={{ userSelect: "none" }}>
       <h2>Conway's Game of Life</h2>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, 20px)` }}>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)` }}>
         {grid.map((row, i) =>
           row.map((cell, j) => (
             <div
               key={`${i}-${j}`}
               onClick={() => toggleCell(i, j)}
               style={{
-                width: 20,
-                height: 20,
+                width: cellSize,
+                height: cellSize,
                 backgroundColor: cell ? "black" : "white",
                 border: "solid 1px #ddd",
               }}
