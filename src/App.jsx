@@ -1,5 +1,5 @@
 
-import "./App.css";
+import "./App.scss";
 import React, { useState, useEffect } from "react";
 
 import { useGrid } from "./Grid";
