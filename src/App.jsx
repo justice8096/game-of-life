@@ -1,10 +1,12 @@
 
 import "./App.scss";
 import React, { useState, useEffect } from "react";
+import { I18nProvider, useI18n, langDir } from "./i18n.jsx";
 
 import { useGrid } from "./Grid";
 
-export default function GameOfLife() {
+function GameOfLifeInner() {
+  const { t, lang, setLang } = useI18n();
   const {
     grid,
     toggleCell,
@@ -51,11 +53,32 @@ export default function GameOfLife() {
     return () => clearInterval(interval);
   }, [running, runningRef, runSimulationStep]);
 
+  const dir = langDir[lang] || 'ltr';
   return (
-    <div style={{ userSelect: "none" }}>
-      <h2>Conway's Game of Life</h2>
+    <div style={{ userSelect: "none" }} dir={dir}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>{t('title')}</h2>
+        <select
+          aria-label="Select language"
+          value={lang}
+          onChange={e => setLang(e.target.value)}
+          style={{ marginLeft: 8 }}
+        >
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="zh">中文</option>
+          <option value="fr">Français</option>
+          <option value="ar">العربية</option>
+          <option value="he">עברית</option>
+          <option value="ga">Gaeilge (Irish)</option>
+          <option value="gu">ગુજરાતી (Gujarati)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="sw">Kiswahili (Swahili)</option>
+          <option value="yo">Yorùbá (Yoruba)</option>
+        </select>
+      </div>
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <label htmlFor="width-input">Width:</label>
+        <label htmlFor="width-input">{t('width')}:</label>
         <input
           id="width-input"
           type="number"
@@ -66,9 +89,9 @@ export default function GameOfLife() {
             setCols(e);
           }}
           className="sizeInput"
-          aria-label="Grid width"
+          aria-label={t('width')}
         />
-        <label htmlFor="height-input">Height:</label>
+        <label htmlFor="height-input">{t('height')}:</label>
         <input
           id="height-input"
           type="number"
@@ -79,12 +102,12 @@ export default function GameOfLife() {
             setRows(e);
           }}
           className="sizeInput"
-          aria-label="Grid height"
+          aria-label={t('height')}
         />
       </div>
       <div
         role="grid"
-        aria-label="Game of Life grid"
+        aria-label={t('gridLabel')}
         style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)` }}
       >
         {grid.map((row, i) =>
@@ -93,7 +116,7 @@ export default function GameOfLife() {
               key={`${i}-${j}`}
               role="gridcell"
               aria-selected={!!cell}
-              aria-label={`Cell ${i + 1}, ${j + 1} ${cell ? 'alive' : 'dead'}`}
+              aria-label={`${t('cellAlive') && cell ? t('cellAlive') : t('cellDead')} (${i + 1}, ${j + 1})`}
               tabIndex={0}
               onClick={() => toggleCell(i, j)}
               style={{
@@ -111,13 +134,21 @@ export default function GameOfLife() {
           onClick={() => setRunning(!running)}
           className="runButtons"
           aria-pressed={running}
-          aria-label={running ? "Stop simulation" : "Start simulation"}
+          aria-label={running ? t('stopSimulation') : t('startSimulation')}
         >
-          {running ? "Stop" : "Start"}
+          {running ? t('stop') : t('start')}
         </button>
-        <button onClick={randomizeGrid} className="runButtons" aria-label="Randomize grid">Random</button>
-        <button onClick={clearGrid} className="runButtons" aria-label="Clear grid">Clear</button>
+        <button onClick={randomizeGrid} className="runButtons" aria-label={t('randomizeGrid')}>{t('random')}</button>
+        <button onClick={clearGrid} className="runButtons" aria-label={t('clearGrid')}>{t('clear')}</button>
       </div>
     </div>
+  );
+}
+
+export default function GameOfLife() {
+  return (
+    <I18nProvider>
+      <GameOfLifeInner />
+    </I18nProvider>
   );
 }
