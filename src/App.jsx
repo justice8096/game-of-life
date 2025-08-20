@@ -54,11 +54,47 @@ export default function GameOfLife() {
   return (
     <div style={{ userSelect: "none" }}>
       <h2>Conway's Game of Life</h2>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)` }}>
+      <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <label htmlFor="width-input">Width:</label>
+        <input
+          id="width-input"
+          type="number"
+          min={1}
+          value={numCols}
+          onChange={e => {
+            setRunning(false);
+            setCols(e);
+          }}
+          className="sizeInput"
+          aria-label="Grid width"
+        />
+        <label htmlFor="height-input">Height:</label>
+        <input
+          id="height-input"
+          type="number"
+          min={1}
+          value={numRows}
+          onChange={e => {
+            setRunning(false);
+            setRows(e);
+          }}
+          className="sizeInput"
+          aria-label="Grid height"
+        />
+      </div>
+      <div
+        role="grid"
+        aria-label="Game of Life grid"
+        style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)` }}
+      >
         {grid.map((row, i) =>
           row.map((cell, j) => (
             <div
               key={`${i}-${j}`}
+              role="gridcell"
+              aria-selected={!!cell}
+              aria-label={`Cell ${i + 1}, ${j + 1} ${cell ? 'alive' : 'dead'}`}
+              tabIndex={0}
               onClick={() => toggleCell(i, j)}
               style={{
                 width: cellSize,
@@ -71,18 +107,16 @@ export default function GameOfLife() {
         )}
       </div>
       <div style={{ marginTop: 10 }}>
-        <button onClick={() => setRunning(!running)} className="runButtons">
+        <button
+          onClick={() => setRunning(!running)}
+          className="runButtons"
+          aria-pressed={running}
+          aria-label={running ? "Stop simulation" : "Start simulation"}
+        >
           {running ? "Stop" : "Start"}
         </button>
-        <button onClick={randomizeGrid} className="runButtons">Random</button>
-        <button onClick={clearGrid} className="runButtons">Clear</button>
-        <div>
-          <b>Grid Size</b> <br />
-          <label>Width:</label>
-          <input value={numCols} onChange={handleSetCols} type="number" min="1" max="100" className='sizeInput'/>
-          <label>Height:</label>
-          <input value={numRows} onChange={handleSetRows} type="number" min="1" max="100" className='sizeInput'/>
-        </div>
+        <button onClick={randomizeGrid} className="runButtons" aria-label="Randomize grid">Random</button>
+        <button onClick={clearGrid} className="runButtons" aria-label="Clear grid">Clear</button>
       </div>
     </div>
   );
