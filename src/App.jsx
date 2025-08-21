@@ -7,6 +7,13 @@ import { useGrid } from "./Grid";
 
 function GameOfLifeInner() {
   const { t, lang, setLang } = useI18n();
+  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    const themeName = `flag-${lang}${darkMode ? '-light' : '-dark'}`;
+    document.documentElement.setAttribute('data-theme', themeName);
+    document.body.setAttribute('data-theme', themeName);
+  }, [lang, darkMode]);
+  
   const {
     grid,
     toggleCell,
@@ -27,7 +34,7 @@ function GameOfLifeInner() {
     setCols(e); // setCols expects the event, not just the value
   }
 
-    function handleSetRows(e) {
+  function handleSetRows(e) {
     setRunning(false);
     setRows(e); // setCols expects the event, not just the value
   }
@@ -56,29 +63,44 @@ function GameOfLifeInner() {
   const dir = langDir[lang] || 'ltr';
   return (
     <div style={{ userSelect: "none" }} dir={dir}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>{t('title')}</h2>
-        <select
-          aria-label="Select language"
-          value={lang}
-          onChange={e => setLang(e.target.value)}
-          style={{ marginLeft: 8 }}
-        >
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="zh">中文</option>
-          <option value="fr">Français</option>
-          <option value="ar">العربية</option>
-          <option value="he">עברית</option>
-          <option value="ga">Gaeilge (Irish)</option>
-          <option value="gu">ગુજરાતી (Gujarati)</option>
-          <option value="hi">हिन्दी (Hindi)</option>
-          <option value="sw">Kiswahili (Swahili)</option>
-          <option value="yo">Yorùbá (Yoruba)</option>
-        </select>
+      <div style={{ textAlign: 'center', marginBottom: 8 }}>
+  <h2 className="app-title">{t('title')}</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 8 }}>
+          <label htmlFor="lang-select" className="lang-label" style={{ fontWeight: 500 }}>{'Language:'}</label>
+          <select
+            id="lang-select"
+            aria-label="Select language"
+            value={lang}
+            onChange={e => setLang(e.target.value)}
+          >
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="zh">中文</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+            <option value="he">עברית</option>
+            <option value="ga">Gaeilge (Irish)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="sw">Kiswahili (Swahili)</option>
+            <option value="yo">Yorùbá (Yoruba)</option>
+          </select>
+          <label htmlFor="theme-toggle-btn" className="mode-label" 
+          style={{ fontWeight: 500, marginLeft: 12 }}>
+            {t(darkMode ? 'dark' : 'light') + ' mode:'}</label>
+          <button
+            id="theme-toggle-btn"
+            aria-label={darkMode ? t('light') : t('dark')}
+            onClick={() => setDarkMode(d => !d)}
+            className="themeToggleBtn"
+            style={{ marginLeft: 4 }}
+          >
+            {t(darkMode ? 'light' : 'dark')}
+          </button>
+        </div>
       </div>
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <label htmlFor="width-input">{t('width')}:</label>
+        <label htmlFor="width-input" className="width-label">{t('width')}:</label>
         <input
           id="width-input"
           type="number"
@@ -91,7 +113,8 @@ function GameOfLifeInner() {
           className="sizeInput"
           aria-label={t('width')}
         />
-        <label htmlFor="height-input">{t('height')}:</label>
+  <label htmlFor="height-input" className="height-label"
+        >{t('height')}:</label>
         <input
           id="height-input"
           type="number"
@@ -106,6 +129,7 @@ function GameOfLifeInner() {
         />
       </div>
       <div
+        className="game-grid"
         role="grid"
         aria-label={t('gridLabel')}
         style={{ display: "grid", gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)` }}
@@ -132,14 +156,16 @@ function GameOfLifeInner() {
       <div style={{ marginTop: 10 }}>
         <button
           onClick={() => setRunning(!running)}
-          className="runButtons"
+          className="runButtons btn-1"
           aria-pressed={running}
           aria-label={running ? t('stopSimulation') : t('startSimulation')}
         >
           {running ? t('stop') : t('start')}
         </button>
-        <button onClick={randomizeGrid} className="runButtons" aria-label={t('randomizeGrid')}>{t('random')}</button>
-        <button onClick={clearGrid} className="runButtons" aria-label={t('clearGrid')}>{t('clear')}</button>
+        <button onClick={randomizeGrid} 
+        className="runButtons btn-2" 
+        aria-label={t('randomizeGrid')}>{t('random')}</button>
+        <button onClick={clearGrid} className="runButtons btn-3" aria-label={t('clearGrid')}>{t('clear')}</button>
       </div>
     </div>
   );

@@ -31,6 +31,8 @@ const translations = {
     stopSimulation: 'Stop insamhladh',
     randomizeGrid: 'Greille randamach',
     clearGrid: 'Glan an ghreille',
+    light: 'Solas',
+    dark: 'Dorcha',
   },
   gu: {
     title: "કોનવેનું જીવન રમત",
@@ -47,6 +49,8 @@ const translations = {
     stopSimulation: 'સિમ્યુલેશન બંધ કરો',
     randomizeGrid: 'યાદૃચ્છિક ગ્રિડ',
     clearGrid: 'ગ્રિડ સાફ કરો',
+    light: 'પ્રકાશ',
+    dark: 'અંધકાર',
   },
   hi: {
     title: "कॉनवे का जीवन खेल",
@@ -63,6 +67,8 @@ const translations = {
     stopSimulation: 'सिमुलेशन रोकें',
     randomizeGrid: 'यादृच्छिक ग्रिड',
     clearGrid: 'ग्रिड साफ़ करें',
+    light: 'प्रकाश',
+    dark: 'अंधेरा',
   },
   sw: {
     title: "Mchezo wa Maisha wa Conway",
@@ -79,6 +85,8 @@ const translations = {
     stopSimulation: 'Simamisha uigaji',
     randomizeGrid: 'Gridi ya nasibu',
     clearGrid: 'Futa gridi',
+    light: 'Nuru',
+    dark: 'Giza',
   },
   yo: {
     title: "Ere Aye Conway",
@@ -95,6 +103,8 @@ const translations = {
     stopSimulation: 'Dákẹ́ ìmúlò',
     randomizeGrid: 'Gírídì àìmọ̀',
     clearGrid: 'Nu gírídì',
+    light: 'Imọlẹ',
+    dark: 'Okunkun',
   },
   ar: {
     title: "لعبة الحياة لكونواي",
@@ -111,6 +121,8 @@ const translations = {
     stopSimulation: 'إيقاف المحاكاة',
     randomizeGrid: 'شبكة عشوائية',
     clearGrid: 'مسح الشبكة',
+    light: 'فاتح',
+    dark: 'داكن',
   },
   he: {
     title: "משחק החיים של קונווי",
@@ -127,6 +139,8 @@ const translations = {
     stopSimulation: 'עצור סימולציה',
     randomizeGrid: 'רשת אקראית',
     clearGrid: 'נקה רשת',
+    light: 'בהיר',
+    dark: 'כהה',
   },
   en: {
     title: "Conway's Game of Life",
@@ -143,6 +157,8 @@ const translations = {
     stopSimulation: 'Stop simulation',
     randomizeGrid: 'Randomize grid',
     clearGrid: 'Clear grid',
+    light: 'Light',
+    dark: 'Dark',
   },
   es: {
     title: "El Juego de la Vida de Conway",
@@ -159,6 +175,8 @@ const translations = {
     stopSimulation: 'Detener simulación',
     randomizeGrid: 'Aleatorizar cuadrícula',
     clearGrid: 'Limpiar cuadrícula',
+    light: 'Claro',
+    dark: 'Oscuro',
   },
   fr: {
     title: "Jeu de la vie de Conway",
@@ -175,6 +193,8 @@ const translations = {
     stopSimulation: 'Arrêter la simulation',
     randomizeGrid: 'Grille aléatoire',
     clearGrid: 'Effacer la grille',
+    light: 'Clair',
+    dark: 'Sombre',
   },
   zh: {
     title: "康威的生命游戏",
@@ -190,7 +210,9 @@ const translations = {
     startSimulation: '开始模拟',
     stopSimulation: '停止模拟',
     randomizeGrid: '随机网格',
-	clearGrid: '清除网格',
+    clearGrid: '清除网格',
+    light: '亮',
+    dark: '暗',
   },
 };
 
