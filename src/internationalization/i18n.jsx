@@ -15,7 +15,7 @@ export const langDir = {
 };
 import React, { createContext, useContext, useState } from 'react';
 
-const translations = {
+export const translations = {
   ga: {
     title: "Cluiche Beatha Conway",
     width: 'Leithead',
